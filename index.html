@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>rate.js</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <link rel="stylesheet" href="rate-1.0.0.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="rate-1.0.0.min.js"></script>
+
+    <script>
+        hljs.initHighlightingOnLoad();
+
+        $(document).ready(function () {
+            Rate.setup(document.getElementById('example-1'));
+            Rate.setup(document.getElementById('example-2'));
+
+            var header = $('header');
+
+            $('.toc-wrapper').pushpin({
+                top: header.offset().top + header.height()
+            });
+
+            $('.scrollspy').scrollSpy();
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: #fafafa;
+        }
+
+        li a {
+            border-left-color: #FFC107 !important;
+        }
+
+        .accent-background {
+            background-color: #FFC107;
+        }
+
+        .underlined {
+            text-decoration: underline;
+        }
+
+        .btn {
+            margin: 10px;
+        }
+
+        .important {
+            padding: 10px;
+            background-color: #ef5350;
+            border-radius: 5px;
+        }
+
+        .info {
+            padding: 10px;
+            background-color: #ffeb3b;
+            border-radius: 5px;
+        }
+
+        #gh-mark {
+            max-width: 100%;
+            max-height: 100%;
+
+            border-radius: 50%;
+        }
+
+        #gh-mark:hover {
+            filter: brightness(400%);
+        }
+
+        tbody tr td:nth-child(1), tbody tr td:nth-child(2) {
+            font-family: monospace;
+        }
+
+        #example-2 {
+            font-size: 3em;
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+<header>
+    <div class="row z-depth-3 accent-background">
+        <div class="col s12 m8 offset-m2">
+            <div class="left">
+                <h1 class="white-text">rate.js</h1>
+                <p class="white-text">A simple rating component</p>
+            </div>
+            <div class="col s12 hide-on-large-only center">
+                <a href="https://github.com/Fylipp/rate.js" class="btn">View on GitHub</a>
+            </div>
+            <h1 class="right hide-on-med-and-down">
+                <a href="https://github.com/Fylipp/rate.js"><img src="gh-mark.png" id="gh-mark"></a>
+            </h1>
+        </div>
+    </div>
+</header>
+
+<main>
+    <div class="row">
+        <div class="col s12 m8 offset-m2">
+            <div id="section-installation" class="section scrollspy">
+                <h1>Installation</h1>
+                <p>
+                    <a href="https://github.com/Fylipp/rate.js/releases">Download the latest
+                        build</a> and link he minified files in your HTML file's head section.
+                </p>
+
+                <pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;rate-VERSION.min.css&quot;&gt;
+&lt;script src=&quot;rate-VERSION.min.js&quot;&gt;&lt;/script&gt;</code></pre>
+            </div>
+
+            <div id="section-usage" class="section scrollspy">
+                <h1>Usage</h1>
+
+                <p>
+                    Each rating component has to be initialized with <code>Rate.setup</code>.
+                </p>
+
+                <p class="info">
+                    <b>INFO: </b>
+                    The default symbols require the page to be served as <code>UTF-8</code>.
+                </p>
+
+                <p class="important">
+                    <b>IMPORTANT:</b>
+                    The value of the component is stored in an attribute, however, this is for read-only use and setting the value is undefined behaviour.
+                </p>
+
+                <div class="row">
+                    <h4>Default</h4>
+                    <p>
+                        By default the component will start without a value and with a maximum of 5. The value will be stored 
+                    </p>
+                    <span id="example-1"></span>
+                    <pre><code class="html">&lt;span id=&quot;component-id&quot;&gt;&lt;/span&gt;</code></pre>
+                    <pre><code class="javascript">Rate.setup(document.getElementById('component-id'));</code></pre>
+                </div>
+
+                <div class="row">
+                    <h4>Value extraction</h4>
+                    <p>The value of can either be accessed through the (optional) hidden input field or via the read-only <code>data-rate-value</code> attribute of the component.</p>
+                </div>
+
+                <div class="row">
+                    <h4>Settings</h4>
+                    <p>
+                        <code>Rate.setup</code> will also accept a second argument containing custom settings. All configuration is done without modifying the HTML.
+                    </p>
+
+                    <table>
+                        <thead>
+                            <th>Name</th>
+                            <th>Default</th>
+                            <th>Description</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>start</td>
+                                <td>0</td>
+                                <td>The initial value</td>
+                            </tr>
+                            <tr>
+                                <td>max</td>
+                                <td>5</td>
+                                <td>The maximum value</td>
+                            </tr>
+                            <tr>
+                                <td>formInputName</td>
+                                <td>undefined</td>
+                                <td>The name of the hidden form input field that will be generated as a sibling. The field will not be generated if the value is <code>undefined</code>.</td>
+                            </tr>
+                            <tr>
+                                <td>filled</td>
+                                <td>★</td>
+                                <td>The character for filled stars</td>
+                            </tr>
+                            <tr>
+                                <td>empty</td>
+                                <td>☆</td>
+                                <td>The character for empty stars</td>
+                            </tr>
+                            <tr>
+                                <td>callback</td>
+                                <td>undefined</td>
+                                <td>The callback for when the value changes</td>
+                            </tr>
+                            <tr>
+                                <td>invokeCallbackOnSetup</td>
+                                <td>false</td>
+                                <td>Whether the callback should be invoked when the component is created</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row">
+                    <h4>Component styling</h4>
+                    <p>
+                        The component is made of text content and can therefor be styled just like any other text.
+                        Below you can see the component with a size of <code>3em</code> and the color <code>green</code>.
+                    </p>
+                    <span id="example-2"></span>
+                    <pre><code class="css">#component-id {
+    font-size: 3em;
+    color: green;
+}</code></pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="col hide-on-small-only m2">
+            <div class="toc-wrapper">
+                <ul class="section table-of-contents">
+                    <li><a href="#section-installation">Installation</a></li>
+                    <li><a href="#section-usage">Usage</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="page-footer accent-background">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">rate.js</h5>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            © 2017 Philipp Ploder
+            <a class="grey-text text-lighten-4 right" href="https://github.com/Fylipp/rate.js">GitHub</a>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
